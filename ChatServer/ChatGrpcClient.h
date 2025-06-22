@@ -1,16 +1,17 @@
 #pragma once
-#include "const.h"
-#include "Singleton.h"
-#include "ConfigMgr.h"
-#include "message.pb.h"
-#include "message.grpc.pb.h"
-#include "data.h"
-
 #include <grpcpp/grpcpp.h>
-#include <queue>
 #include <json/json.h>
-#include <json/value.h>
 #include <json/reader.h>
+#include <json/value.h>
+
+#include <queue>
+
+#include "ConfigMgr.h"
+#include "Singleton.h"
+#include "const.h"
+#include "data.h"
+#include "message.grpc.pb.h"
+#include "message.pb.h"
 
 using grpc::Channel;
 using grpc::ClientContext;
@@ -19,48 +20,53 @@ using grpc::Status;
 using message::AddFriendReq;
 using message::AddFriendRsp;
 
+using message::ChatService;
 using message::GetChatServerRsp;
 using message::LoginReq;
 using message::LoginRsp;
-using message::ChatService;
 
 using message::AuthFriendReq;
 using message::AuthFriendRsp;
 
+using message::TextChatData;
 using message::TextChatMsgReq;
 using message::TextChatMsgRsp;
-using message::TextChatData;
 
 class ChatConPool {
-public:
-	ChatConPool(size_t poolSize, std::string host, std::string port);
-	~ChatConPool();
-	void Close();
-	std::unique_ptr<ChatService::Stub> getConnection();
-	void returnConnection(std::unique_ptr<ChatService::Stub> context);
-private:
-	size_t poolSize_;
-	size_t capacity;
-	std::atomic<bool> b_stop;
-	std::string host_;
-	std::string port_;
-	//±£Ö¤Á¬½ÓÎ¨Ò»ÐÔ£¬Ê¹ÓÃunique¹ÜÀí
-	std::queue<std::unique_ptr<ChatService::Stub>> connections_;
-	std::mutex mutex_;
-	std::condition_variable cond_;
+ public:
+  ChatConPool(size_t poolSize, std::string host, std::string port);
+  ~ChatConPool();
+  void Close();
+  std::unique_ptr<ChatService::Stub> getConnection();
+  void returnConnection(std::unique_ptr<ChatService::Stub> context);
+
+ private:
+  size_t poolSize_;
+  size_t capacity;
+  std::atomic<bool> b_stop;
+  std::string host_;
+  std::string port_;
+  // ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½Î¨Ò»ï¿½Ô£ï¿½Ê¹ï¿½ï¿½uniqueï¿½ï¿½ï¿½ï¿½
+  std::queue<std::unique_ptr<ChatService::Stub>> connections_;
+  std::mutex mutex_;
+  std::condition_variable cond_;
 };
 
-class ChatGrpcClient : public Singleton<ChatGrpcClient>
-{
-	friend class Singleton<ChatGrpcClient>;
-public:
-	~ChatGrpcClient() {};
+class ChatGrpcClient : public Singleton<ChatGrpcClient> {
+  friend class Singleton<ChatGrpcClient>;
 
-	AddFriendRsp NotifyAddFriend(std::string server_ip, const AddFriendReq& req);
-	AuthFriendRsp NotifyAuthFriend(std::string server_ip, const AuthFriendReq& req);
-	TextChatMsgRsp NotifyTextChatMsg(std::string server_ip, const TextChatMsgReq& req, const Json::Value& rtvalue);
-private:
-	ChatGrpcClient();
-	std::unordered_map<std::string, std::unique_ptr<ChatConPool>> _pools;	//Ò»¸öip¶ÔÓ¦Ò»¸öÁ¬½Ó³Ø£¬´ÓÁ¬½Ó³ØÖÐ»ñÈ¡Á¬½ÓÓë·þÎñÆ÷Á¬½Ó
+ public:
+  ~ChatGrpcClient() {};
+
+  AddFriendRsp NotifyAddFriend(std::string server_ip, const AddFriendReq& req);
+  AuthFriendRsp NotifyAuthFriend(std::string server_ip,
+                                 const AuthFriendReq& req);
+  TextChatMsgRsp NotifyTextChatMsg(std::string server_ip,
+                                   const TextChatMsgReq& req,
+                                   const Json::Value& rtvalue);
+
+ private:
+  ChatGrpcClient();
+  std::unordered_map<std::string, std::unique_ptr<ChatConPool>>
+      _pools;  // Ò»ï¿½ï¿½ipï¿½ï¿½Ó¦Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ó³Ø£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó³ï¿½ï¿½Ð»ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 };
-

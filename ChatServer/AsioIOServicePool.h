@@ -1,27 +1,29 @@
 #pragma once
-#include <vector>
 #include <boost/asio.hpp>
+#include <vector>
+
 #include "Singleton.h"
 
 class AsioIOServicePool : public Singleton<AsioIOServicePool> {
-	friend Singleton<AsioIOServicePool>;
-public:
-	using IOService = boost::asio::io_context;
-	using WorkGuard = boost::asio::executor_work_guard<IOService::executor_type>;
-	using WorkGuardPtr = std::unique_ptr<WorkGuard>;
+  friend Singleton<AsioIOServicePool>;
 
-	~AsioIOServicePool();
-	AsioIOServicePool(const AsioIOServicePool&) = delete;
-	AsioIOServicePool& operator=(const AsioIOServicePool&) = delete;
+ public:
+  using IOService = boost::asio::io_context;
+  using WorkGuard = boost::asio::executor_work_guard<IOService::executor_type>;
+  using WorkGuardPtr = std::unique_ptr<WorkGuard>;
 
-	// 使用 round-robin 的方式返回一个 io_service
-	boost::asio::io_context& GetIOService();
-	void Stop();
+  ~AsioIOServicePool();
+  AsioIOServicePool(const AsioIOServicePool&) = delete;
+  AsioIOServicePool& operator=(const AsioIOServicePool&) = delete;
 
-private:
-	AsioIOServicePool(std::size_t size = std::thread::hardware_concurrency());
-	std::vector<IOService> _ioServices;
-	std::vector<WorkGuardPtr> _workGuards;
-	std::vector<std::thread> _threads;
-	std::size_t _nextIOService;
+  // 使锟斤拷 round-robin 锟侥凤拷式锟斤拷锟斤拷一锟斤拷 io_service
+  boost::asio::io_context& GetIOService();
+  void Stop();
+
+ private:
+  AsioIOServicePool(std::size_t size = std::thread::hardware_concurrency());
+  std::vector<IOService> _ioServices;
+  std::vector<WorkGuardPtr> _workGuards;
+  std::vector<std::thread> _threads;
+  std::size_t _nextIOService;
 };

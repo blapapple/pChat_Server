@@ -38,34 +38,34 @@ using tcp = boost::asio::ip::tcp; // from <boost/asio/ip/tcp.hpp>
 
 enum ErrorCodes {
 	Success = 0,
-	Error_Json = 1001,				//Json½âÎö´íÎó
-	RPCFailed = 1002,				//RPCµ÷ÓÃÊ§°Ü
-	VarifyExpired = 1003,			//ÑéÖ¤Âë¹ýÆÚ
-	VarifyCodeErr = 1004,			//ÑéÖ¤Âë´íÎó
-	UserExist = 1005,				//ÓÃ»§ÒÑ´æÔÚ
-	PasswdErr = 1006,				//ÃÜÂë´íÎó
-	EmailNotMatch = 1007,			//ÓÊÏä²»Æ¥Åä
-	PasswdUpFailed = 1008,			//ÃÜÂë¸üÐÂÊ§°Ü
-	PasswdInvalid = 1009,			//ÃÜÂë²»ºÏ·¨
-	UidInvalid = 1010,				//ÓÃ»§IDÎÞÐ§
-	TokenInvalid = 1011,			//TokenÎÞÐ§
+	Error_Json = 1001,				//Jsonï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	RPCFailed = 1002,				//RPCï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½
+	VarifyExpired = 1003,			//ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½
+	VarifyCodeErr = 1004,			//ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½
+	UserExist = 1005,				//ï¿½Ã»ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½
+	PasswdErr = 1006,				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	EmailNotMatch = 1007,			//ï¿½ï¿½ï¿½ä²»Æ¥ï¿½ï¿½
+	PasswdUpFailed = 1008,			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½
+	PasswdInvalid = 1009,			//ï¿½ï¿½ï¿½ë²»ï¿½Ï·ï¿½
+	UidInvalid = 1010,				//ï¿½Ã»ï¿½IDï¿½ï¿½Ð§
+	TokenInvalid = 1011,			//Tokenï¿½ï¿½Ð§
 };
 
 enum MSG_IDS {
-	MSG_CHAT_LOGIN = 1005,		// ÓÃ»§µÇÂ¼
-	MSG_CHAT_LOGIN_RSP = 1006,	// ÓÃ»§µÇÂ¼·µ»Ø°ü
-	ID_SEARCH_USER_RSP = 1008,           // ËÑË÷ÓÃ»§»Ø°ü
-	ID_SEARCH_USER_REQ = 1007,           // ËÑË÷ÓÃ»§ÇëÇó
-	ID_ADD_FRIEND_REQ = 1009,            // Ìí¼ÓºÃÓÑÇëÇó
-	ID_ADD_FRIEND_RSP = 1010,            // Ìí¼ÓºÃÓÑ»Ø¸´
-	ID_NOTIFY_ADD_FRIEND_REQ = 1011,     // Í¨ÖªÌí¼ÓºÃÓÑÇëÇó
-	ID_AUTH_FRIEND_REQ = 1013,           // ÈÏÖ¤ºÃÓÑÇëÇó
-	ID_AUTH_FRIEND_RSP = 1014,           // ÈÏÖ¤ºÃÓÑ»Ø¸´
-	ID_NOTIFY_AUTH_FRIEND_REQ = 1015,    // Í¨ÖªÈÏÖ¤ºÃÓÑÇëÇó
-	ID_TEXT_CHAT_MSG_REQ = 1017,         // ÎÄ±¾ÁÄÌìÏûÏ¢ÇëÇó
-	ID_TEXT_CHAT_MSG_RSP = 1018,         // ÎÄ±¾ÁÄÌìÏûÏ¢»Ø¸´
-	ID_NOTIFY_TEXT_CHAT_MSG_REQ = 1019,  // Í¨ÖªÎÄ±¾ÁÄÌìÏûÏ¢ÇëÇó
-	ID_NOTIFY_TEXT_CHAT_MSG_RSP = 1020,  // Í¨ÖªÎÄ±¾ÁÄÌìÏûÏ¢»Ø¸´
+	MSG_CHAT_LOGIN = 1005,		// ï¿½Ã»ï¿½ï¿½ï¿½Â¼
+	MSG_CHAT_LOGIN_RSP = 1006,	// ï¿½Ã»ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½Ø°ï¿½
+	ID_SEARCH_USER_RSP = 1008,           // ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Ø°ï¿½
+	ID_SEARCH_USER_REQ = 1007,           // ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½
+	ID_ADD_FRIEND_REQ = 1009,            // ï¿½ï¿½ï¿½Óºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	ID_ADD_FRIEND_RSP = 1010,            // ï¿½ï¿½ï¿½Óºï¿½ï¿½Ñ»Ø¸ï¿½
+	ID_NOTIFY_ADD_FRIEND_REQ = 1011,     // Í¨Öªï¿½ï¿½ï¿½Óºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	ID_AUTH_FRIEND_REQ = 1013,           // ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	ID_AUTH_FRIEND_RSP = 1014,           // ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½Ñ»Ø¸ï¿½
+	ID_NOTIFY_AUTH_FRIEND_REQ = 1015,    // Í¨Öªï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	ID_TEXT_CHAT_MSG_REQ = 1017,         // ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
+	ID_TEXT_CHAT_MSG_RSP = 1018,         // ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½Ø¸ï¿½
+	ID_NOTIFY_TEXT_CHAT_MSG_REQ = 1019,  // Í¨Öªï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
+	ID_NOTIFY_TEXT_CHAT_MSG_RSP = 1020,  // Í¨Öªï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½Ø¸ï¿½
 };
 
 #define CODEPREFIX "code_"
@@ -77,14 +77,14 @@ enum MSG_IDS {
 #define NAME_INFO "nameinfo_"
 
 #define MAX_LENGTH 1024*2
-#define HEAD_TOTAL_LEN 4		// Í·²¿×Ü³¤¶È
-#define HEAD_ID_LEN 2			// Í·²¿id³¤¶È
-#define HEAD_DATA_LEN 2			// Í·²¿Êý¾Ý³¤¶È
-#define MAX_RECVQUE 10000		// ×î´ó½ÓÊÕ¶ÓÁÐ³¤¶È
-#define MAX_SENDQUE 10000		// ×î´ó·¢ËÍ¶ÓÁÐ³¤¶È
+#define HEAD_TOTAL_LEN 4		// Í·ï¿½ï¿½ï¿½Ü³ï¿½ï¿½ï¿½
+#define HEAD_ID_LEN 2			// Í·ï¿½ï¿½idï¿½ï¿½ï¿½ï¿½
+#define HEAD_DATA_LEN 2			// Í·ï¿½ï¿½ï¿½ï¿½ï¿½Ý³ï¿½ï¿½ï¿½
+#define MAX_RECVQUE 10000		// ï¿½ï¿½ï¿½ï¿½ï¿½Õ¶ï¿½ï¿½Ð³ï¿½ï¿½ï¿½
+#define MAX_SENDQUE 10000		// ï¿½ï¿½ï¿½ï¿½Í¶ï¿½ï¿½Ð³ï¿½ï¿½ï¿½
 
 /**
-* DeferÀà£¬ÓÃÓÚÔÚ×÷ÓÃÓò½áÊøÇ°µ÷ÓÃÖ¸¶¨µÄº¯Êý
+* Deferï¿½à£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Äºï¿½ï¿½ï¿½
 */
 class Defer {
 public:
